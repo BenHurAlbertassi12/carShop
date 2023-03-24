@@ -4,6 +4,7 @@ import Sinon from 'sinon';
 import ICar from '../../../src/Interfaces/ICar';
 import CarsODM from '../../../src/Models/CarODM';
 import CarsService from '../../../src/Services/CarService';
+import list from './Mock';
 
 describe('Service Create Car', function () {
   it('Create new Car', async function () {
@@ -25,41 +26,18 @@ describe('Service Create Car', function () {
     const carCreated = await service.createCarService(paramCar);
     expect(carCreated).to.be.deep.equal(newCarMock);
   });
+
+  describe('Service Find', function () {
+    it('Find car', async function () {
+      Sinon.stub(Model, 'find').resolves(list);
+      const service = new CarsService(new CarsODM());
+      const carCreated = await service.AllService();
+      expect(carCreated).to.be.deep.equal(list);
+    });
+  });
   afterEach(function () {
     Sinon.restore();
   });
 });
 
-// describe('Service Creates', function () {
-//   it('Listando veiculos', async function () {
-//     const listCar = [
-//       {
-//         id: '634852326b35b59438fbea2f',
-//         model: 'Marea',
-//         year: 2002,
-//         color: 'Black',
-//         status: true,
-//         buyValue: 15.99,
-//         doorsQty: 4,
-//         seatsQty: 5,
-//       },
-//       {
-//         id: '634852326b35b59438fbea31',
-//         model: 'Tempra',
-//         year: 1995,
-//         color: 'Black',
-//         status: false,
-//         buyValue: 39,
-//         doorsQty: 2,
-//         seatsQty: 5,
-//       },
-//     ];
-//     Sinon.stub(Model, 'find').resolves(listCar);
-//     const service = new CarsService(new CarsODM());
-//     const carCreated = await service.AllService();
-//     expect(carCreated).to.be.deep.equal(listCar);
-//   });
-//   afterEach(function () {
-//     Sinon.restore();
-//   });
-// });
+// teste retirado do lectures/backend/12.2
